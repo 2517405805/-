@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>书库</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <span style="font-size:1.5rem; margin-right:5px;">📝</span>
+            <span>我的书库</span> 
+            <span id="connection-status" class="status-badge" style="margin-left:10px; font-size:0.7rem; padding:2px 6px; background:#eee; color:#666; border-radius:4px;">离线模式</span>
+        </div>
+        <div class="header-right">
+            <button id="btn-theme" onclick="toggleTheme()" title="切换亮/暗主题">🌗</button>
+            <button id="btn-sync" onclick="handleSaveClick()">💾 保存到本地</button>
+            <button onclick="openConfig()">⚙️ 云端设置</button>
+        </div>
+    </header>
+    <div id="loading">正在连接...</div>
+    <div class="container">
+        <aside>
+            <div class="sidebar-tools">
+                <span>我的书架</span>
+                <span class="btn-add" onclick="addBook()" title="新建书架">+ 书架</span>
+            </div>
+            <div style="padding: 0 15px;">
+                <input class="search-input" id="search" placeholder="搜索..." oninput="render()">
+            </div>
+            <div class="book-list" id="bookList"></div>
+        </aside>
+        <main>
+            <div id="empty-tips" class="empty-tips">请选择文章或新建内容</div>
+                        <div class="editor-wrapper" id="editor" style="display:none;">
+                <input id="doc-title" placeholder="文章标题">
+                <div style="font-size: 0.8rem; color:#ccc; margin-bottom: 10px;"> 所属: <span id="cur-book-name"></span>
+                    <span id="unsaved-dot" style="color:orange; display:none;"> ● 未保存</span>
+                </div>
+                                <div class="toolbar" id="toolbar">
+                                        <button onclick="formatDoc('bold')" title="粗体"><b>B</b></button>
+                    <button onclick="formatDoc('italic')" title="斜体"><i>I</i></button>
+                    <button onclick="formatDoc('underline')" title="下划线"><u>U</u></button>
+                    <button onclick="formatDoc('strikeThrough')" title="删除线"><s>S</s></button>
+                    <span class="separator">|</span> 
+                    <select onchange="formatDoc('formatBlock', this.value); this.selectedIndex=0;">
+                        <option value="" selected hidden>段落格式</option>
+                        <option value="p">正文 (P)</option>
+                        <option value="h2">大标题 (H2)</option>
+                        <option value="h3">中标题 (H3)</option>
+                        <option value="blockquote">引用块</option>
+                    </select>
+                    <button onclick="formatDoc('insertUnorderedList')" title="无序列表">• 列表</button>
+                    <button onclick="formatDoc('insertOrderedList')" title="有序列表">1. 列表</button>
+                    <span class="separator">|</span>
+                    <div class="color-wrapper" title="文字颜色">
+                        <span style="font-size:0.8rem;">A</span>
+                        <input type="color" onchange="formatDoc('foreColor', this.value)" style="width:20px; padding:0; border:none;">
+                    </div>
+                    <div class="color-wrapper" title="背景高亮">
+                        <span style="font-size:0.8rem; background:yellow;">A</span>
+                        <input type="color" onchange="formatDoc('backColor', this.value)" style="width:20px; padding:0; border:none;" value="#ffff00">
+                    </div>
+                    <span class="separator">|</span>
+                    <button onclick="formatDoc('removeFormat')" title="清除格式">🧹</button>
+                </div>
+                <div id="doc-content" contenteditable="true"></div>
+            </div>
+        </main>
+    </div>
+    <div class="modal-overlay" id="configModal">
+        <div class="modal">
+            <h3>连接 GitHub (可选)</h3>
+            <p style="font-size:0.85rem; color:#666; margin-bottom:15px;">
+                未连接时，数据仅保存在当前浏览器。<br>连接后，点击保存将同步到云端。
+            </p>
+            <div class="form-group">
+                <label>用户名 (Owner)</label>
+                <input id="conf-owner" placeholder="例如: yourname">
+            </div>
+            <div class="form-group">
+                <label>仓库名 (Repo)</label>
+                <input id="conf-repo" placeholder="例如: my-wiki">
+            </div>
+            <div class="form-group">
+                <label>Token (Classic)</label>
+                <input id="conf-token" type="password" placeholder="ghp_xxxx...">
+            </div>
+            <div style="display:flex; justify-content:space-between; gap:10px;">
+                <button class="modal-btn" style="background:#d73a49;" onclick="disconnectGithub()">断开连接</button>
+                <button class="modal-btn" onclick="saveConfig()">连接并同步</button>
+            </div>
+            <div style="text-align:center; margin-top:10px;">
+                <a href="#" onclick="closeConfig()" style="font-size:0.8rem; color:#666;">暂不连接，继续离线使用</a>
+            </div>
+        </div>
+    </div>
+    <div id="img-context-menu" class="context-menu" style="display:none;">
+        <div class="menu-item" onclick="downloadSelectedImage()">📥 保存图片到本地</div>
+        <div class="menu-item" onclick="deleteSelectedImage()" style="color:#d73a49">🗑️ 删除图片</div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
