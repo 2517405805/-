@@ -10,5 +10,17 @@
         "content": ""
       }
     ]
+  },
+  {
+    "id": "b1767762713179",
+    "title": "vscode",
+    "isOpen": true,
+    "chapters": [
+      {
+        "id": "c1767762713179",
+        "title": "首页",
+        "content": "<span style=\"font-size: 1.05rem;\">删除多行注释：</span><span style=\"font-size: 1.05rem;\">/\\*[\\s\\S]*?\\*/，这样只能匹配单行的/*&nbsp; */注释，换行后支持多行的</span><div><span style=\"font-size: 1.05rem;\"><br></span></div>"
+      }
+    ]
   }
 ]
