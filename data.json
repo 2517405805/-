@@ -1,17 +1,5 @@
 [
   {
-    "id": "b1767665074911",
-    "title": "丝之歌",
-    "isOpen": true,
-    "chapters": [
-      {
-        "id": "c1767665074911",
-        "title": "首页",
-        "content": ""
-      }
-    ]
-  },
-  {
     "id": "b1767762713179",
     "title": "vscode",
     "isOpen": true,
